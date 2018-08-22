@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0BC4D86D212CF533001A6EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BC4D86C212CF533001A6EF6 /* main.m */; };
 		0BC4D875212CF55D001A6EF6 /* Dice.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BC4D874212CF55D001A6EF6 /* Dice.m */; };
+		0BC4D878212D0C96001A6EF6 /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BC4D877212D0C96001A6EF6 /* GameController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		0BC4D86C212CF533001A6EF6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; };
 		0BC4D873212CF55D001A6EF6 /* Dice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dice.h; sourceTree = "<group>"; };
 		0BC4D874212CF55D001A6EF6 /* Dice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dice.m; sourceTree = "<group>"; };
+		0BC4D876212D0C96001A6EF6 /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
+		0BC4D877212D0C96001A6EF6 /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,8 @@
 				0BC4D86C212CF533001A6EF6 /* main.m */,
 				0BC4D873212CF55D001A6EF6 /* Dice.h */,
 				0BC4D874212CF55D001A6EF6 /* Dice.m */,
+				0BC4D876212D0C96001A6EF6 /* GameController.h */,
+				0BC4D877212D0C96001A6EF6 /* GameController.m */,
 			);
 			path = ThreeLow;
 			sourceTree = "<group>";
@@ -124,6 +129,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BC4D878212D0C96001A6EF6 /* GameController.m in Sources */,
 				0BC4D875212CF55D001A6EF6 /* Dice.m in Sources */,
 				0BC4D86D212CF533001A6EF6 /* main.m in Sources */,
 			);
