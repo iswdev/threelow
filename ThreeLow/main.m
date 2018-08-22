@@ -31,11 +31,22 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         //testDice();
         GameController *game=[GameController new];
-        [game createDices];
         [game printDices];
         do{
-            command = readCommand(@"Input your command [roll exit]: ");
+            command = readCommand(@"Input your command [roll hold exit]: ");
             if ( [ command isEqualToString:@"roll"]){
+                [game rollDices];
+                [game printDices];
+            }
+            if ( [ command isEqualToString:@"hold"]){
+                command = readCommand(@"Input your holded dices [separated by space]: ");
+                NSArray *list = [command componentsSeparatedByString:@" "];
+                for(int i=0;i<[list count];i++){
+                    NSString *str=[list objectAtIndex:i];
+                    NSInteger number = [str integerValue];
+                    [game holdDice:number];
+                    NSLog(@"%@",str);
+                }
                 [game rollDices];
                 [game printDices];
             }

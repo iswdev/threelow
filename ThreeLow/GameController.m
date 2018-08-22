@@ -13,7 +13,10 @@
 
 @implementation GameController
 
-
+- (instancetype) init{
+    [self createDices];
+    return self;
+}
 
 - (void) testDice {
     Dice *dice = [Dice new];
@@ -32,15 +35,13 @@
 }
 
 - (void) printDices{
-    NSString *row = [NSString
-                     stringWithFormat:@"1 %@  2 %@  3 %@  4 %@  5 %@  6 %@"
-                     ,[[self.dices objectAtIndex: 0] visibleValue]
-                     ,[[self.dices objectAtIndex: 1] visibleValue]
-                     ,[[self.dices objectAtIndex: 2] visibleValue]
-                     ,[[self.dices objectAtIndex: 3] visibleValue]
-                     ,[[self.dices objectAtIndex: 4] visibleValue]
-                     ,[[self.dices objectAtIndex: 5] visibleValue]
-                     ];
+    NSString *row = @"";
+    NSString *mark;
+    int i;
+    for(i=0; i< NUMDICES; i++){
+        mark = @"*";
+        row = [row stringByAppendingString:[NSString stringWithFormat:@"%d %@%@  ", i+1, mark,  [[self.dices objectAtIndex: i] visibleValue]]];
+    }
     NSLog(@"%@",row);
 }
 
@@ -49,6 +50,18 @@
     int i;
     for(i=0; i< NUMDICES; i++){
         [self.dices[i] roll];
+    }
+}
+
+- (void) clearHold{
+    [self.holdedDices removeAllObjects];
+}
+
+- (void) holdDice: (int) position{
+    Dice *selected = [self.dices objectAtIndex:position];
+    NSInteger foundItem = ([self.holdedDices indexOfObject:selected] );
+    if(foundItem == NSNotFound) {
+        [self.holdedDices addObject:selected];
     }
 }
 

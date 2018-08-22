@@ -13,6 +13,7 @@
 @property NSMutableArray *dices;
 @property NSMutableArray *holdedDices;
 
+- (instancetype) init;
 
 - (void) testDice ;
 
@@ -22,5 +23,7 @@
 
 
 - (void) rollDices;
+
+- (void) holdDice: (int) position;
 
 @end
