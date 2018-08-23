@@ -5,9 +5,11 @@ ThreeLow console game
 # Example output
 
 ```
-
 1 5️⃣  2 6️⃣  3 5️⃣  4 2️⃣  5 2️⃣  6 1️⃣  
 Current points: 21   Attempts: 0
+Input your command [roll hold reset exit]: 
+roll
+⚠️ There are no holded dices. Try again after hold.
 Input your command [roll hold reset exit]: 
 hold
 Input dices numbers to hold-unhold [separated by space]: 
