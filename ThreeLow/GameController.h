@@ -21,8 +21,11 @@
 
 - (void) printDices;
 
+- (void) printScore;
 
 - (void) rollDices;
+
+- (void) resetDice;
 
 - (void) holdDice: (int) position;
 

@@ -10,8 +10,11 @@
 #import "Dice.h"
 
 #define NUMDICES 6
+#define MAXATTEMPTS 5
 
 @implementation GameController
+
+int attempts = 0;
 
 - (instancetype) init{
     [self createDices];
@@ -36,24 +39,58 @@
 
 - (void) printDices{
     NSString *row = @"";
-    NSString *mark;
+    NSString *mark, *holdMark = @"*", *freeMark = @" ";
+    Dice *dice;
     int i;
     for(i=0; i< NUMDICES; i++){
-        mark = @"*";
-        row = [row stringByAppendingString:[NSString stringWithFormat:@"%d %@%@  ", i+1, mark,  [[self.dices objectAtIndex: i] visibleValue]]];
+        dice = self.dices[i];
+        mark = freeMark;
+        if ([self.holdedDices indexOfObject:dice] != NSNotFound){
+            mark = holdMark;
+        }
+        row = [row stringByAppendingString:[NSString stringWithFormat:@"%d%@%@  ", i+1, mark,  [dice visibleValue]]];
     }
-    NSLog(@"%@",row);
+    NSLog(@"\n%@\n",row);
+    [self printScore];
+}
+
+- (void) printScore{
+    int i, sum=0;
+    Dice *dice;
+    for(i=0; i< NUMDICES; i++){
+        dice = self.dices[i];
+        sum += dice.value;
+    }
+
+    NSLog(@"Current points: %d   Attempts: %d",sum, attempts);
 }
 
 
 - (void) rollDices{
     int i;
-    for(i=0; i< NUMDICES; i++){
-        [self.dices[i] roll];
+    Dice *dice;
+    if (self.holdedDices.count == 0){
+        NSLog(@"⚠️ There are no holded dices. Try again after hold.");
+        return;
     }
+    if (attempts == MAXATTEMPTS){
+        NSLog(@"⚠️ Max number of attempts reached. Try doing a 'reset' first");
+        return;
+    }
+    if (self.holdedDices.count == NUMDICES){
+        NSLog(@"⚠️ All dices are holded. Try un-holding dices first");
+        return;
+    }
+    for(i=0; i< NUMDICES; i++){
+        dice = self.dices[i];
+        if ([self.holdedDices indexOfObject:dice] == NSNotFound){
+            [dice roll];
+        }
+    }
+    attempts ++;
 }
 
-- (void) clearHold{
+- (void) resetDice{
     [self.holdedDices removeAllObjects];
 }
 
@@ -62,6 +99,8 @@
     NSInteger foundItem = ([self.holdedDices indexOfObject:selected] );
     if(foundItem == NSNotFound) {
         [self.holdedDices addObject:selected];
+    }else{
+        [self.holdedDices removeObject:selected];
     }
 }
 
