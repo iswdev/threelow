@@ -13,6 +13,7 @@
 
 NSString *command;
 
+// To read commands from user
 NSString *readCommand(NSString *promptString){
     NSLog(@"%@", promptString);
     
@@ -26,12 +27,13 @@ NSString *readCommand(NSString *promptString){
     
 }
 
-
+// main program
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        //testDice();
+        
         GameController *game=[GameController new];
         [game printDices];
+        
         do{
             command = readCommand(@"Input your command [roll hold reset exit]: ");
             if ( [ command isEqualToString:@"roll"]){
@@ -43,8 +45,12 @@ int main(int argc, const char * argv[]) {
                 NSArray *list = [command componentsSeparatedByString:@" "];
                 for(int i=0;i<[list count];i++){
                     NSString *str=[list objectAtIndex:i];
-                    NSInteger number = [str integerValue] -1;
-                    [game holdDice:(int)number];
+                    NSInteger number = [str integerValue];
+                    if (number > 6 || number<1 ){
+                        NSLog(@"⚠️ %@ must be a valid number between 1 and 6 ", str);
+                        continue;
+                    }
+                    [game holdDice:(int)number - 1];
                 }
                 [game printDices];
             }

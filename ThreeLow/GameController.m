@@ -16,11 +16,13 @@
 
 int attempts = 0;
 
+// Initialization, creation of dices
 - (instancetype) init{
     [self createDices];
     return self;
 }
 
+// method to test the dice roll
 - (void) testDice {
     Dice *dice = [Dice new];
     NSLog(@"Dice initial value %@",[dice visibleValue]);
@@ -28,6 +30,7 @@ int attempts = 0;
     NSLog(@"Dice value after roll %@",[dice visibleValue]);
 }
 
+// To create an array of dices and an empty array of holded dices
 - (void) createDices {
     int i;
     self.dices = [NSMutableArray new];
@@ -37,6 +40,7 @@ int attempts = 0;
     }
 }
 
+// Shows a list of dices with values and an optional "hold" mark
 - (void) printDices{
     NSString *row = @"";
     NSString *mark, *holdMark = @"*", *freeMark = @" ";
@@ -54,6 +58,7 @@ int attempts = 0;
     [self printScore];
 }
 
+// prints the score and attemps
 - (void) printScore{
     int i, sum=0;
     Dice *dice;
@@ -65,7 +70,7 @@ int attempts = 0;
     NSLog(@"Current points: %d   Attempts: %d",sum, attempts);
 }
 
-
+// rolls all dices after checking some conditions
 - (void) rollDices{
     int i;
     Dice *dice;
@@ -90,10 +95,17 @@ int attempts = 0;
     attempts ++;
 }
 
+// Resets all dice values, number of attempts and clear the holdedDices array
 - (void) resetDice{
+    int i;
     [self.holdedDices removeAllObjects];
+    attempts = 0;
+    for(i=0; i< NUMDICES; i++){
+        [self.dices[i] roll];
+    }
 }
 
+// Include or exclude dices from holded list
 - (void) holdDice: (int) position{
     Dice *selected = [self.dices objectAtIndex:position];
     NSInteger foundItem = ([self.holdedDices indexOfObject:selected] );
