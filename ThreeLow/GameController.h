@@ -10,23 +10,23 @@
 
 @interface GameController : NSObject
 
-@property NSMutableArray *dices;
-@property NSMutableArray *holdedDices;
+@property NSMutableArray *gameDice;
+@property NSMutableArray *holdedDice;
 
 - (instancetype) init;
 
 - (void) testDice ;
 
-- (void) createDices ;
+- (void) createDice ;
 
-- (void) printDices;
+- (void) printDice;
 
 - (void) printScore;
 
-- (void) rollDices;
+- (void) rollDice;
 
 - (void) resetDice;
 
-- (void) holdDice: (int) position;
+- (void) holdDie: (int) position;
 
 @end

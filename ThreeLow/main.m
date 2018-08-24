@@ -32,16 +32,16 @@ int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         GameController *game=[GameController new];
-        [game printDices];
+        [game printDice];
         
         do{
             command = readCommand(@"Input your command [roll hold reset exit]: ");
             if ( [ command isEqualToString:@"roll"]){
-                [game rollDices];
-                [game printDices];
+                [game rollDice];
+                [game printDice];
             }
             if ( [ command isEqualToString:@"hold"]){
-                command = readCommand(@"Input dices numbers to hold-unhold [separated by space]: ");
+                command = readCommand(@"Input Dice numbers to hold-unhold [separated by space]: ");
                 NSArray *list = [command componentsSeparatedByString:@" "];
                 for(int i=0;i<[list count];i++){
                     NSString *str=[list objectAtIndex:i];
@@ -50,13 +50,13 @@ int main(int argc, const char * argv[]) {
                         NSLog(@"⚠️ %@ must be a valid number between 1 and 6 ", str);
                         continue;
                     }
-                    [game holdDice:(int)number - 1];
+                    [game holdDie:(int)number - 1];
                 }
-                [game printDices];
+                [game printDice];
             }
             if ( [ command isEqualToString:@"reset"]){
                 [game resetDice];
-                [game printDices];
+                [game printDice];
             }
         } while (![ command isEqualToString:@"exit"]);
         

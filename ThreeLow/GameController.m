@@ -9,20 +9,21 @@
 #import "GameController.h"
 #import "Dice.h"
 
-#define NUMDICES 6
+#define NUMDICE 6
 #define MAXATTEMPTS 5
 
 @implementation GameController
 
 int attempts = 0;
+int minScore = 30;
 
-// Initialization, creation of dices
+// Initialization, creation of dice
 - (instancetype) init{
-    [self createDices];
+    [self createDice];
     return self;
 }
 
-// method to test the dice roll
+// method to test a die roll
 - (void) testDice {
     Dice *dice = [Dice new];
     NSLog(@"Dice initial value %@",[dice visibleValue]);
@@ -30,29 +31,31 @@ int attempts = 0;
     NSLog(@"Dice value after roll %@",[dice visibleValue]);
 }
 
-// To create an array of dices and an empty array of holded dices
-- (void) createDices {
+// To create an array of dice and an empty array of holded dice
+- (void) createDice {
     int i;
-    self.dices = [NSMutableArray new];
-    self.holdedDices = [NSMutableArray new];
-    for(i=0; i< NUMDICES; i++){
-        [self.dices addObject:[Dice new]];
+    self.gameDice = [NSMutableArray new];
+    self.holdedDice = [NSMutableArray new];
+    for(i=0; i< NUMDICE; i++){
+        [self.gameDice addObject:[Dice new]];
     }
 }
 
-// Shows a list of dices with values and an optional "hold" mark
-- (void) printDices{
+// Shows a list of dice with values and an optional "hold" mark
+- (void) printDice{
     NSString *row = @"";
-    NSString *mark, *holdMark = @"*", *freeMark = @" ";
+    NSString *mark1, *mark2, *holdMark1 = @"[", *holdMark2 = @"]", *freeMark = @" ";
     Dice *dice;
     int i;
-    for(i=0; i< NUMDICES; i++){
-        dice = self.dices[i];
-        mark = freeMark;
-        if ([self.holdedDices indexOfObject:dice] != NSNotFound){
-            mark = holdMark;
+    for(i=0; i< NUMDICE; i++){
+        dice = self.gameDice[i];
+        mark1 = freeMark;
+        mark2 = freeMark;
+        if ([self.holdedDice indexOfObject:dice] != NSNotFound){
+            mark1 = holdMark1;
+            mark2 = holdMark2;
         }
-        row = [row stringByAppendingString:[NSString stringWithFormat:@"%d%@%@  ", i+1, mark,  [dice visibleValue]]];
+        row = [row stringByAppendingString:[NSString stringWithFormat:@"%d%@%@%@ ", i+1, mark1,  [dice visibleValue], mark2 ]];
     }
     NSLog(@"\n%@\n",row);
     [self printScore];
@@ -62,57 +65,60 @@ int attempts = 0;
 - (void) printScore{
     int i, sum=0;
     Dice *dice;
-    for(i=0; i< NUMDICES; i++){
-        dice = self.dices[i];
+    for(i=0; i< NUMDICE; i++){
+        dice = self.gameDice[i];
         sum += dice.value;
     }
-
-    NSLog(@"Current points: %d   Attempts: %d",sum, attempts);
+    if (minScore> sum && attempts > 0){
+        minScore = sum;
+        NSLog(@"👍 Congratulations! You got a new lower score : %d",sum);
+    }
+    NSLog(@"Current points: %d   Attempts: %d   Lower score: %d",sum, attempts, minScore);
 }
 
-// rolls all dices after checking some conditions
-- (void) rollDices{
+// rolls all dice after checking some conditions
+- (void) rollDice{
     int i;
     Dice *dice;
-    if (self.holdedDices.count == 0){
-        NSLog(@"⚠️ There are no holded dices. Try again after hold.");
+    if (self.holdedDice.count == 0){
+        NSLog(@"⚠️ There are no holded dice. Try again after hold.");
         return;
     }
     if (attempts == MAXATTEMPTS){
         NSLog(@"⚠️ Max number of attempts reached. Try doing a 'reset' first");
         return;
     }
-    if (self.holdedDices.count == NUMDICES){
-        NSLog(@"⚠️ All dices are holded. Try un-holding dices first");
+    if (self.holdedDice.count == NUMDICE){
+        NSLog(@"⚠️ All dice are holded. Try un-holding dice first");
         return;
     }
-    for(i=0; i< NUMDICES; i++){
-        dice = self.dices[i];
-        if ([self.holdedDices indexOfObject:dice] == NSNotFound){
+    for(i=0; i< NUMDICE; i++){
+        dice = self.gameDice[i];
+        if ([self.holdedDice indexOfObject:dice] == NSNotFound){
             [dice roll];
         }
     }
     attempts ++;
 }
 
-// Resets all dice values, number of attempts and clear the holdedDices array
+// Resets all dice values, number of attempts and clear the holdedDice array
 - (void) resetDice{
     int i;
-    [self.holdedDices removeAllObjects];
+    [self.holdedDice removeAllObjects];
     attempts = 0;
-    for(i=0; i< NUMDICES; i++){
-        [self.dices[i] roll];
+    for(i=0; i< NUMDICE; i++){
+        [self.gameDice[i] roll];
     }
 }
 
-// Include or exclude dices from holded list
-- (void) holdDice: (int) position{
-    Dice *selected = [self.dices objectAtIndex:position];
-    NSInteger foundItem = ([self.holdedDices indexOfObject:selected] );
+// Include or exclude dice from holded list
+- (void) holdDie: (int) position{
+    Dice *selected = [self.gameDice objectAtIndex:position];
+    NSInteger foundItem = ([self.holdedDice indexOfObject:selected] );
     if(foundItem == NSNotFound) {
-        [self.holdedDices addObject:selected];
+        [self.holdedDice addObject:selected];
     }else{
-        [self.holdedDices removeObject:selected];
+        [self.holdedDice removeObject:selected];
     }
 }
 
