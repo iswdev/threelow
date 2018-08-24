@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Dice.h"
 
 @interface GameController : NSObject
 
-@property NSMutableArray *gameDice;
-@property NSMutableArray *holdedDice;
+@property NSMutableArray <Dice *> *gameDice;
+@property NSMutableArray <Dice *> *holdedDice;
 
 - (instancetype) init;
 

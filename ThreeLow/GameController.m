@@ -64,10 +64,8 @@ int minScore = 30;
 // prints the score and attemps
 - (void) printScore{
     int i, sum=0;
-    Dice *dice;
     for(i=0; i< NUMDICE; i++){
-        dice = self.gameDice[i];
-        sum += dice.value;
+        sum += self.gameDice[i].value;
     }
     if (minScore> sum && attempts > 0){
         minScore = sum;
